@@ -1,0 +1,1110 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Para Ti, Mi Pecesita 💕</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            overflow-x: hidden;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Estanque de agua */
+        .pond {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        /* Ondas de agua */
+        .water-ripple {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: ripple 4s infinite;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* Peces Koi con efecto serpiente */
+        :root {
+            --coilSize: 12px;
+            --delayCount: 35ms;
+            --scaleMe: 1;
+            --scaleFlip: 1;
+            --posFlip: 0;
+        }
+        
+        .fish {
+            position: absolute;
+            top: 0;
+            left: 5%;
+            width: 200px;
+            height: 100%;
+            filter: drop-shadow(
+                calc(var(--coilSize) * 2) calc(var(--coilSize) / 3) 4px rgba(0, 0, 0, 0.3)
+            );
+            z-index: 2;
+        }
+        
+        .fish .koiCoil {
+            position: absolute;
+            width: var(--coilSize);
+            height: var(--coilSize);
+            background-color: #ff6b35;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            margin-left: calc(var(--coilSize) / -2);
+            margin-top: calc(var(--coilSize) / -2);
+            transform: scale(var(--scaleMe), var(--scaleMe));
+            filter: contrast(200%);
+            offset-path: path(
+                "M80 50 C120 100, 40 180, 90 280 C140 380, 30 450, 80 550 C130 650, 50 720, 100 800 C60 720, 140 650, 90 550 C40 450, 150 380, 100 280 C50 180, 130 100, 80 50"
+            );
+            animation: fishAnimLeft 12000ms linear infinite;
+            box-shadow: calc(var(--coilSize) / -2) calc(var(--coilSize) / -10) 0 white inset;
+        }
+        
+        /* Segundo pez - lado derecho */
+        .fish:nth-of-type(2) {
+            left: auto;
+            right: 5%;
+            filter: drop-shadow(
+                calc(var(--coilSize) * -2) calc(var(--coilSize) / 3) 4px rgba(0, 0, 0, 0.3)
+            );
+        }
+        
+        .fish:nth-of-type(2) .koiCoil {
+            background-color: #fff;
+            box-shadow: calc(var(--coilSize) / -2) calc(var(--coilSize) / -10) 0 #ff6b35 inset;
+            offset-path: path(
+                "M100 800 C60 720, 140 650, 90 550 C40 450, 150 380, 100 280 C50 180, 130 100, 80 50 C120 100, 40 180, 90 280 C140 380, 30 450, 80 550 C130 650, 50 720, 100 800"
+            );
+            animation: fishAnimRight 14000ms linear infinite;
+            animation-delay: -3000ms;
+        }
+        
+        /* Tercer pez - lado izquierdo abajo */
+        .fish:nth-of-type(3) {
+            left: 12%;
+            transform: scale(0.85);
+        }
+        
+        .fish:nth-of-type(3) .koiCoil {
+            background-color: #e63946;
+            box-shadow: calc(var(--coilSize) / -2) calc(var(--coilSize) / -10) 0 #ff69b4 inset;
+            animation-delay: -6000ms;
+        }
+        
+        /* Cuarto pez - lado derecho abajo */
+        .fish:nth-of-type(4) {
+            left: auto;
+            right: 12%;
+            transform: scale(0.9);
+            filter: drop-shadow(
+                calc(var(--coilSize) * -2) calc(var(--coilSize) / 3) 4px rgba(0, 0, 0, 0.3)
+            );
+        }
+        
+        .fish:nth-of-type(4) .koiCoil {
+            background-color: #ffd700;
+            box-shadow: calc(var(--coilSize) / -2) calc(var(--coilSize) / -10) 0 #ffb347 inset;
+            offset-path: path(
+                "M100 800 C60 720, 140 650, 90 550 C40 450, 150 380, 100 280 C50 180, 130 100, 80 50 C120 100, 40 180, 90 280 C140 380, 30 450, 80 550 C130 650, 50 720, 100 800"
+            );
+            animation: fishAnimRight 13000ms linear infinite;
+            animation-delay: -8000ms;
+        }
+        
+        /* Cola de los peces (últimos coils) */
+        .fish .koiCoil:nth-of-type(15),
+        .fish .koiCoil:nth-of-type(14) {
+            background-color: #ff6b35;
+        }
+        
+        .fish:nth-of-type(2) .koiCoil:nth-of-type(15),
+        .fish:nth-of-type(2) .koiCoil:nth-of-type(14) {
+            background-color: #fff;
+        }
+        
+        .fish:nth-of-type(3) .koiCoil:nth-of-type(15),
+        .fish:nth-of-type(3) .koiCoil:nth-of-type(14) {
+            background-color: #e63946;
+        }
+        
+        .fish:nth-of-type(4) .koiCoil:nth-of-type(15),
+        .fish:nth-of-type(4) .koiCoil:nth-of-type(14) {
+            background-color: #ffd700;
+        }
+        
+        /* Ojos del pez */
+        .fish .koiCoil:nth-of-type(15)::after {
+            content: ":";
+            position: absolute;
+            color: black;
+            font-weight: 800;
+            text-align: center;
+            line-height: 60%;
+            font-size: calc(var(--coilSize) * 1.1);
+        }
+        
+        /* Cola del pez */
+        .fish .koiCoil:nth-of-type(1)::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            top: 25%;
+            left: -100%;
+            border-radius: var(--coilSize);
+            background-color: inherit;
+            opacity: 0.9;
+            transform-origin: center right;
+            animation: backFlip 200ms ease-in-out alternate infinite;
+        }
+        
+        /* Escalas del cuerpo */
+        .fish .koiCoil:nth-of-type(14) { --scaleMe: 1.2; animation-delay: calc(var(--delayCount) * 1); }
+        .fish .koiCoil:nth-of-type(13) { --scaleMe: 1.35; animation-delay: calc(var(--delayCount) * 2); }
+        .fish .koiCoil:nth-of-type(12) { --scaleMe: 1.55; animation-delay: calc(var(--delayCount) * 3); }
+        .fish .koiCoil:nth-of-type(11) { --scaleMe: 1.75; animation-delay: calc(var(--delayCount) * 4); }
+        .fish .koiCoil:nth-of-type(10) { --scaleMe: 1.9; animation-delay: calc(var(--delayCount) * 5); }
+        .fish .koiCoil:nth-of-type(9) { --scaleMe: 2; animation-delay: calc(var(--delayCount) * 6); }
+        .fish .koiCoil:nth-of-type(8) { --scaleMe: 2; animation-delay: calc(var(--delayCount) * 7); }
+        .fish .koiCoil:nth-of-type(7) { --scaleMe: 2; animation-delay: calc(var(--delayCount) * 8); }
+        .fish .koiCoil:nth-of-type(6) { --scaleMe: 1.9; animation-delay: calc(var(--delayCount) * 9); }
+        .fish .koiCoil:nth-of-type(5) { --scaleMe: 1.75; animation-delay: calc(var(--delayCount) * 10); }
+        .fish .koiCoil:nth-of-type(4) { --scaleMe: 1.55; animation-delay: calc(var(--delayCount) * 11); }
+        .fish .koiCoil:nth-of-type(3) { --scaleMe: 1.35; animation-delay: calc(var(--delayCount) * 12); }
+        .fish .koiCoil:nth-of-type(2) { --scaleMe: 1.2; animation-delay: calc(var(--delayCount) * 13); }
+        .fish .koiCoil:nth-of-type(1) { animation-delay: calc(var(--delayCount) * 14); }
+        
+        /* Aletas laterales */
+        .fish .koiCoil:nth-of-type(12)::before,
+        .fish .koiCoil:nth-of-type(12)::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 20%;
+            top: -10%;
+            left: -100%;
+            border-radius: var(--coilSize);
+            background-color: inherit;
+            opacity: 0.8;
+            transform-origin: center right;
+            animation: sideFlip 500ms ease-in-out alternate infinite;
+        }
+        
+        .fish .koiCoil:nth-of-type(12)::after {
+            --scaleFlip: -1;
+            --posFlip: calc(var(--coilSize) * -1);
+        }
+        
+        @keyframes fishAnimLeft {
+            0% { offset-distance: 0%; }
+            100% { offset-distance: 100%; }
+        }
+        
+        @keyframes fishAnimRight {
+            0% { offset-distance: 0%; }
+            100% { offset-distance: 100%; }
+        }
+        
+        @keyframes backFlip {
+            0% { transform: rotate(45deg); }
+            100% { transform: rotate(-45deg); }
+        }
+        
+        @keyframes sideFlip {
+            0% { transform: scale(1, var(--scaleFlip)) translateY(var(--posFlip)) rotate(80deg); }
+            100% { transform: scale(1, var(--scaleFlip)) translateY(var(--posFlip)) rotate(20deg); }
+        }
+        
+        /* Flores de loto flotantes */
+        .lotus {
+            position: absolute;
+            z-index: 3;
+            animation: floatLotus 6s ease-in-out infinite;
+        }
+        
+        .lotus-petal {
+            position: absolute;
+            width: 20px;
+            height: 35px;
+            background: linear-gradient(to top, #ffb6c1, #ff69b4);
+            border-radius: 50% 50% 50% 50%;
+            transform-origin: bottom center;
+        }
+        
+        .lotus-center {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: radial-gradient(circle, #ffd700, #ffb347);
+            border-radius: 50%;
+            top: 15px;
+            left: 17px;
+            z-index: 10;
+        }
+        
+        @keyframes floatLotus {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        /* Pétalos cayendo */
+        .petal {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            border-radius: 50% 0 50% 50%;
+            z-index: 5;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0.3;
+            }
+        }
+        
+        /* Corazones flotantes */
+        .heart {
+            position: fixed;
+            z-index: 4;
+            color: #ff69b4;
+            opacity: 0.6;
+            animation: floatHeart 8s ease-in-out infinite;
+        }
+        
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-30px) scale(1.2);
+                opacity: 0.9;
+            }
+        }
+        
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        /* Carta */
+        .letter {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 248, 240, 0.95));
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 0 100px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: letterAppear 2s ease-out;
+        }
+        
+        @keyframes letterAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .letter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff69b4, #ff6b35, #ffd700, #ff69b4);
+        }
+        
+        .letter-decoration {
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.05;
+            color: #ff69b4;
+        }
+        
+        .letter-decoration.top-left {
+            top: -20px;
+            left: -20px;
+        }
+        
+        .letter-decoration.bottom-right {
+            bottom: -20px;
+            right: -20px;
+        }
+        
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #e63946;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #ff69b4;
+            margin-bottom: 30px;
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #333;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        /* Carrusel */
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            min-height: 280px;
+        }
+        
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .carousel-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #ff69b4, #e63946);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(230, 57, 70, 0.5);
+        }
+        
+        .carousel-dots {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: linear-gradient(135deg, #ff69b4, #e63946);
+            transform: scale(1.2);
+        }
+        
+        .carousel-dot:hover {
+            background: #ff69b4;
+        }
+        
+        .slide-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #e63946;
+            margin-top: 30px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .date {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            color: #ff69b4;
+            margin-top: 10px;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(230, 57, 70, 0.5); }
+            to { text-shadow: 0 0 30px rgba(230, 57, 70, 0.8), 0 0 50px rgba(255, 105, 180, 0.5); }
+        }
+        
+        /* Reproductor de música */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 248, 240, 0.95));
+            border-radius: 20px;
+            padding: 15px 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .music-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #ff69b4, #e63946);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .music-btn.small {
+            width: 32px;
+            height: 32px;
+            font-size: 0.9rem;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(230, 57, 70, 0.5);
+        }
+        
+        .music-info {
+            text-align: left;
+            max-width: 150px;
+        }
+        
+        .music-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1rem;
+            color: #e63946;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .music-artist {
+            font-size: 0.75rem;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .volume-icon {
+            font-size: 1rem;
+            color: #e63946;
+        }
+        
+        .volume-slider {
+            width: 60px;
+            height: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, #ff69b4, #e63946);
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #e63946;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .volume-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: #e63946;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .music-visualizer {
+            display: flex;
+            gap: 3px;
+            align-items: flex-end;
+            height: 30px;
+        }
+        
+        .bar {
+            width: 4px;
+            background: linear-gradient(to top, #ff69b4, #e63946);
+            border-radius: 2px;
+            animation: soundBar 0.5s ease-in-out infinite alternate;
+        }
+        
+        .bar:nth-child(1) { height: 10px; animation-delay: 0s; }
+        .bar:nth-child(2) { height: 20px; animation-delay: 0.1s; }
+        .bar:nth-child(3) { height: 15px; animation-delay: 0.2s; }
+        .bar:nth-child(4) { height: 25px; animation-delay: 0.3s; }
+        .bar:nth-child(5) { height: 18px; animation-delay: 0.4s; }
+        
+        @keyframes soundBar {
+            to { height: 30px; }
+        }
+        
+        .visualizer-paused .bar {
+            animation-play-state: paused;
+            height: 5px !important;
+        }
+        
+        /* Koi SVG mejorado */
+        .koi-svg {
+            position: absolute;
+            z-index: 2;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+        }
+        
+        /* Burbujas */
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+            border-radius: 50%;
+            animation: rise linear infinite;
+        }
+        
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .letter {
+                padding: 25px;
+                margin: 10px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+            }
+            
+            .message {
+                font-size: 1rem;
+            }
+            
+            .signature {
+                font-size: 1.5rem;
+            }
+            
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pond" id="pond">
+        <!-- Pez 1 - Naranja -->
+        <div class="fish">
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+        </div>
+        <!-- Pez 2 - Blanco -->
+        <div class="fish">
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+        </div>
+        <!-- Pez 3 - Rojo -->
+        <div class="fish">
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+        </div>
+        <!-- Pez 4 - Dorado -->
+        <div class="fish">
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+            <div class="koiCoil"></div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="letter">
+            <div class="letter-decoration top-left">♥</div>
+            <div class="letter-decoration bottom-right">♥</div>
+            
+            <h1 class="title">Para Ti, Mi Pecesita</h1>
+            <p class="subtitle">~ En este día tan especial ~</p>
+            
+            <div class="carousel" id="carousel">
+                <div class="carousel-inner" id="carouselInner">
+                    <!-- Slide 1 -->
+                    <div class="carousel-slide">
+                        <div class="slide-icon">🐟</div>
+                        <div class="message">
+                            Mi pecesita hermosa, se que estos días han sido algo complicados, pero como siempre te digo que estare para ti en las buenas,<br>
+                            y sobretodo en las malas, muchas gracias por permitirme estar a tu lado<br>
+                            Me siento tan cómodo a tu lado y siento que puedo ser yo mismo, hacer gritos raros, probar cosas nuevas, vivir experiencias o los apodos que nos decimos<br>
+                            eso me hace sentir muy feliz, y me hace sentir que estamos conectados de una forma tan bonita.
+
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="carousel-slide">
+                        <div class="slide-icon">✨</div>
+                        <div class="message">
+                            De verdad no conozco a alguien tan resiliente y fuerte como tú, a pesar de los problemas<br>
+                            y aunque a veces te sientas triste, siempre veo que sigues adelante<br>
+                            y siempre esforzandote en todas tus cositas, la verdad aunque no lo creas estoy todo el día pensando en tí<br>
+                            en como te estará yendo en el trabajo, si estaras bien, o si ya almorzaste o si ya estas volviendo a casita, me dan ganas de llamarte pero se que andas a full.
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="carousel-slide">
+                        <div class="slide-icon">🌙</div>
+                        <div class="message">
+                            Eres la persona que más admiro en este mundo, y me siento realmente afortunado y orgulloso<br>
+                            de tenerte a mi lado, de compartir momentos contigo<br>
+                            de reirnos juntos, ver series, comer nuestro popeyes(mi dieta), de siempre hacer llamada antes de dormir para escucharnos<br>
+                            por entendernos tan bien y haber conectado tan bonito, y por ser la persona que me hace sentir tan feliz y amado.<br>
+                            Me pongo muy contento cuando me cuentas tus cositas y cuando me abrazas o cuando nos besamos, estar a tu lado simplemente me pone feliz y me hace olvidar de todo lo malo<br>
+
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="carousel-slide">
+                        <div class="slide-icon">💕</div>
+                        <div class="message">
+                            Perdón por haber tardado tanto con mi pedida<br>
+                            pero quería hacer algo asi de nuevo ya que el otro se perdió.<br>
+                            Espero que te guste esta nueva versión, y que sepas que cada palabra viene del fondo de mi corazón.<br>
+                            Ahora no se nos perderá esta carta mi amor y podras verla cuando quieras.<br>
+                            De nuevo muchas gracias por ser mi compañera de vida, siempre me esforzaré por hacerte feliz, apoyarte en todo lo que necesites y hacer todo para tener una vida feliz juntos.<br>
+                            Me siento tan feliz de haber tomado la decisión de escribirte, gracias a eso hoy me siento el más afortunado del mundo<br>
+
+                            Mua, te amo mucho mi amor.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-nav">
+                    <button class="carousel-btn" onclick="prevSlide()">❮</button>
+                    <div class="carousel-dots" id="carouselDots"></div>
+                    <button class="carousel-btn" onclick="nextSlide()">❯</button>
+                </div>
+            </div>
+            
+            <p class="signature">¿Quieres ser mi San Valentin? 💕</p>
+            <p class="date">14 de Febrero, 2026</p>
+        </div>
+    </div>
+    
+    <!-- Reproductor de música -->
+    <div class="music-player">
+        <div class="music-controls">
+            <button class="music-btn small" onclick="prevSong()">⏮</button>
+            <button class="music-btn" id="playBtn" onclick="toggleMusic()">▶</button>
+            <button class="music-btn small" onclick="nextSong()">⏭</button>
+        </div>
+        <div class="music-info">
+            <div class="music-title" id="songTitle">♪ Only</div>
+            <div class="music-artist" id="songArtist">Lee Hi</div>
+        </div>
+        <div class="volume-control">
+            <span class="volume-icon">🔊</span>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70" oninput="changeVolume(this.value)">
+        </div>
+        <div class="music-visualizer" id="visualizer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+    
+    <!-- Audio -->
+    <audio id="bgMusic">
+        <source src="Lee Hi - ONLY (Traducida al Español).mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // Los peces koi ahora están definidos en HTML con animación CSS
+        const pond = document.getElementById('pond');
+        
+        // Crear pétalos cayendo
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = (5 + Math.random() * 10) + 's';
+            petal.style.opacity = 0.3 + Math.random() * 0.5;
+            petal.style.width = (10 + Math.random() * 10) + 'px';
+            petal.style.height = petal.style.width;
+            document.body.appendChild(petal);
+            
+            setTimeout(() => petal.remove(), 15000);
+        }
+        
+        setInterval(createPetal, 500);
+        
+        // Crear corazones flotantes
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '♥';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(heart);
+        }
+        
+        for (let i = 0; i < 15; i++) {
+            createHeart();
+        }
+        
+        // Crear burbujas
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = 5 + Math.random() * 15;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.bottom = '-20px';
+            bubble.style.animationDuration = (8 + Math.random() * 12) + 's';
+            pond.appendChild(bubble);
+            
+            setTimeout(() => bubble.remove(), 20000);
+        }
+        
+        setInterval(createBubble, 1000);
+        
+        // Crear ondas de agua
+        function createRipple() {
+            const ripple = document.createElement('div');
+            ripple.className = 'water-ripple';
+            const size = 50 + Math.random() * 100;
+            ripple.style.width = size + 'px';
+            ripple.style.height = size + 'px';
+            ripple.style.left = Math.random() * 100 + 'vw';
+            ripple.style.top = Math.random() * 100 + 'vh';
+            pond.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 4000);
+        }
+        
+        setInterval(createRipple, 2000);
+        
+        // Control de música con playlist
+        const playlist = [
+            { src: 'Lee Hi - ONLY (Traducida al Español).mp3', title: 'Only', artist: 'Lee Hi' },
+            { src: 'Andrea.mp3', title: 'Andrea', artist: 'Para Ti' },
+            { src: 'BAD BUNNY - ALAMBRE PúA - (Visualizer).mp3', title: 'Alambre Púa', artist: 'Bad Bunny' }
+        ];
+        
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        const audio = document.getElementById('bgMusic');
+        
+        // Volumen inicial
+        audio.volume = 0.7;
+        
+        function changeVolume(value) {
+            audio.volume = value / 100;
+        }
+        
+        function updateSongInfo() {
+            const song = playlist[currentSongIndex];
+            document.getElementById('songTitle').textContent = '♪ ' + song.title;
+            document.getElementById('songArtist').textContent = song.artist;
+            audio.src = song.src;
+        }
+        
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                document.getElementById('playBtn').textContent = '▶';
+                document.getElementById('visualizer').classList.add('visualizer-paused');
+            } else {
+                audio.play().catch(e => {
+                    alert('Haz clic en cualquier lugar primero para activar el audio');
+                });
+                document.getElementById('playBtn').textContent = '⏸';
+                document.getElementById('visualizer').classList.remove('visualizer-paused');
+            }
+            isPlaying = !isPlaying;
+        }
+        
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            updateSongInfo();
+            if (isPlaying) {
+                audio.play();
+            }
+        }
+        
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            updateSongInfo();
+            if (isPlaying) {
+                audio.play();
+            }
+        }
+        
+        // Cuando termina una canción, pasar a la siguiente
+        audio.addEventListener('ended', nextSong);
+        
+        // Iniciar con visualizador pausado
+        document.getElementById('visualizer').classList.add('visualizer-paused');
+        
+        // Autoplay al cargar la página
+        window.addEventListener('load', function() {
+            audio.play().then(() => {
+                isPlaying = true;
+                document.getElementById('playBtn').textContent = '⏸';
+                document.getElementById('visualizer').classList.remove('visualizer-paused');
+            }).catch(e => {
+                console.log('Autoplay bloqueado, esperando interacción del usuario');
+                // Intentar reproducir con el primer click en cualquier parte
+                document.body.addEventListener('click', function autoplayOnClick() {
+                    if (!isPlaying) {
+                        audio.play().then(() => {
+                            isPlaying = true;
+                            document.getElementById('playBtn').textContent = '⏸';
+                            document.getElementById('visualizer').classList.remove('visualizer-paused');
+                        });
+                    }
+                    document.body.removeEventListener('click', autoplayOnClick);
+                }, { once: true });
+            });
+        });
+        
+        // Crear flores de loto
+        function createLotus(x, y) {
+            const lotus = document.createElement('div');
+            lotus.className = 'lotus';
+            lotus.style.left = x + 'px';
+            lotus.style.top = y + 'px';
+            
+            let lotusHTML = '<div class="lotus-center"></div>';
+            for (let i = 0; i < 8; i++) {
+                const rotation = i * 45;
+                lotusHTML += `<div class="lotus-petal" style="transform: rotate(${rotation}deg) translateY(-15px);"></div>`;
+            }
+            lotus.innerHTML = lotusHTML;
+            pond.appendChild(lotus);
+            
+            // Movimiento flotante del loto
+            let lotusX = x;
+            function floatLotus() {
+                lotusX += 0.2;
+                if (lotusX > window.innerWidth + 100) lotusX = -100;
+                lotus.style.left = lotusX + 'px';
+                requestAnimationFrame(floatLotus);
+            }
+            floatLotus();
+        }
+        
+        // Crear algunas flores de loto
+        createLotus(100, window.innerHeight - 150);
+        createLotus(window.innerWidth - 200, window.innerHeight - 200);
+        createLotus(window.innerWidth / 2, window.innerHeight - 100);
+        
+        // === CARRUSEL ===
+        let currentSlide = 0;
+        const carouselInner = document.getElementById('carouselInner');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        const dotsContainer = document.getElementById('carouselDots');
+        
+        // Crear dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+        
+        function updateCarousel() {
+            carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Actualizar dots
+            document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+    </script>
+</body>
+</html>
